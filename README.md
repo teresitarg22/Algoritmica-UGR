@@ -1,4 +1,4 @@
-# Algoritmica
+# Algorítmica
 
 En este repositorio vamos a reflejar el trabajo que realizamos en la asignatura de Algorítmica de Ingeniería Informática.
 
