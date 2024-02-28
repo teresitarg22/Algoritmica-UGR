@@ -4,6 +4,7 @@ En este repositorio vamos a reflejar el trabajo que realizamos en la asignatura 
 
 ### :bulb: Miembros del equipo de desarrollo
 
+- :bust_in_silhouette: López García, Manuel Jesús
 - :bust_in_silhouette: Reyes García, Teresa Fernanda
 - :bust_in_silhouette: Rincón Otero, Marta
 - :bust_in_silhouette: Velázquez Ortuño, Diego
