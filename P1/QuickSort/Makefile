@@ -15,6 +15,7 @@ OBJS = $(SRCS:.cpp=.o)
 # Regla de compilación para generar el programa de salida
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	@echo "Ejemplo de ejecución: ./quickSort quickSort.txt 12345 1000 2000 3000"
 
 # Regla de compilación para generar archivos objeto
 %.o: %.cpp
