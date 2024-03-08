@@ -1,21 +1,26 @@
-CC = g++
-CFLAGS = -std=c++11
+# Makefile para compilar quickSort.cpp
 
-# Nombre del ejecutable
-TARGET = counting_sort
+CXX = g++               # Compilador C++
+CXXFLAGS = -std=c++11    # Opciones del compilador
 
-# Fuentes y objetos
-SRCS = main.cpp
+# Nombre del programa de salida
+TARGET = countingSort
+
+# Lista de archivos fuente
+SRCS = countingSort.cpp
+
+# Genera los nombres de los archivos objeto a partir de los archivos fuente
 OBJS = $(SRCS:.cpp=.o)
 
-# Regla de construcción del ejecutable
+# Regla de compilación para generar el programa de salida
 $(TARGET): $(OBJS)
-    $(CC) $(CFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	@echo "Ejemplo de ejecución: ./countingSort countingSort.txt 12345 1000 2000 3000"
 
-# Regla de construcción de los objetos
+# Regla de compilación para generar archivos objeto
 %.o: %.cpp
-    $(CC) $(CFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Regla para eliminar los archivos generados
+# Regla para limpiar los archivos objeto y el programa de salida
 clean:
-    rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(TARGET)
