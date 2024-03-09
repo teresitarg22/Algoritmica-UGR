@@ -18,14 +18,6 @@ void unir(vector<long int> & vec, vector<long int> & vIzq, long int & pivote, ve
     //     }
     
 
-    //  vec.clear();  // Limpiar el vector vec antes de agregar elementos
-
-    // vec.reserve(vIzq.size() + 1 + vDcha.size());  // Reservar espacio para los elementos
-
-    // vec.insert(vec.end(), vIzq.begin(), vIzq.end());  // Agregar elementos de vIzq
-    // vec.push_back(pivote);  // Agregar el pivote
-    // vec.insert(vec.end(), vDcha.begin(), vDcha.end()); 
-
     vec = vIzq;
 
     vec.push_back(pivote);
