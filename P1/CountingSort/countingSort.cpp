@@ -10,17 +10,6 @@ using namespace std;
 // ---------------------------------------------------------------------
 // Función que realiza el algoritmo de ordenamiento Counting Sort
 void countingSort(vector<int> &elementos){
-    // ------------------------------------------
-    // Imprimimos por terminal el vector inicial.
-    printf("\n-------------------------------------");
-    printf("\nEl vector inicial es: \n");
-
-    for(int i = 0; i < elementos.size(); i++) {
-        if(i == elementos.size()-1)
-            cout << elementos[i] << endl;
-        else    
-            cout << elementos[i] << ", ";
-    }
 
     // 1. Averiguar el intervalo de los datos --> máximo y mínimo.
     int min = elementos[0]; // inicializamos el elemento mínimo.
@@ -57,17 +46,6 @@ void countingSort(vector<int> &elementos){
             elementos[indice++] = i;
             aux[i - min]--;
         }
-    }
-
-    // ----------------------------------------
-    // Imprimimos por terminal el vector final.
-    printf("\nEl vector una vez ordenado es: \n");
-
-    for(int i = 0; i < elementos.size(); i++) {
-        if(i == elementos.size()-1)
-            cout << elementos[i] << endl << endl;
-        else    
-            cout << elementos[i] << ", ";
     }
 }
 
