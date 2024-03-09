@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void unir(vector<int> & vec, vector<int> & vIzq, int & pivote, vector<int> & vDcha){
+void unir(vector<long int> & vec, vector<long int> & vIzq, long int & pivote, vector<long int> & vDcha){
     // for(int i = 0; i < vDcha.size(); i ++){
     //         vec[i] = vDcha[i];
     //     }
@@ -18,31 +18,74 @@ void unir(vector<int> & vec, vector<int> & vIzq, int & pivote, vector<int> & vDc
     //     }
     
 
+    //  vec.clear();  // Limpiar el vector vec antes de agregar elementos
+
+    // vec.reserve(vIzq.size() + 1 + vDcha.size());  // Reservar espacio para los elementos
+
+    // vec.insert(vec.end(), vIzq.begin(), vIzq.end());  // Agregar elementos de vIzq
+    // vec.push_back(pivote);  // Agregar el pivote
+    // vec.insert(vec.end(), vDcha.begin(), vDcha.end()); 
+
     vec = vIzq;
+
     vec.push_back(pivote);
     
     for(int i = 0; i < vDcha.size(); i++){
         vec.push_back(vDcha[i]);
     }
+
+    
 }
 
-void quickSort(vector<int> & vec){
+long int comparaTres( vector<long int> &vec){
+    
+    long int ret; 
+    long int a = 0, b = 1, c = vec.size()-1;
+
+    if(vec[a] >= vec[b]){
+        if(vec[a]>= vec[c]){
+            ret =  a;
+        }else{
+            ret = c;
+        }
+    }else{
+        if(vec[b] >= vec[c]){
+            ret = b;
+        }else{
+            ret = c;
+        }
+    }
+
+    return ret;
+}
+
+void quickSort(vector<long int> & vec){
 
     if(vec.size() == 1){
         //Si el tamaño es 1 entonces no hay que seguir ordenando
         return;
 
     }else{
-        //Seleccionamos el pivote (en esta implementación escogemos el elemento en la mitad del vector)
-        int posPivote = vec.size()/2;
-        int pivote = vec[posPivote];
+        //Seleccionamos el pivote 
+
+        long int posPivote, pivote;
+
+        if(vec.size() >=3){
+
+            posPivote = comparaTres(vec);
+            pivote = vec[posPivote];
+        
+        }else{
+            posPivote = 0;
+            pivote = vec[0];
+        }
 
         //Dividimos el vector en dos vectores. vDcha contiene elementos mayores que el pivote y vIzq los menores o iguales
 
-        vector<int> vDcha;
-        vector<int> vIzq;
+        vector<long int> vDcha;
+        vector<long int> vIzq;
 
-        for(int i = 0; i < vec.size() ; i ++){
+        for(long int i = 0; i < vec.size() ; i ++){
             if(i != posPivote){
                 if (vec[i] <= pivote){
                     vIzq.push_back(vec[i]);
@@ -92,7 +135,7 @@ int main(int argc, char **argv){
 
         while (num_ejecucion  < argc){
 
-            vector<int> vec;
+            vector<long int> vec;
             unsigned long int tam = atoi(argv[num_ejecucion]);
            
             // Generamos vector aleatorio de prueba, con componentes entre 0 y n-1
@@ -116,6 +159,10 @@ int main(int argc, char **argv){
             fsalida<<tam<<" "<<tejecucion<<"\n";
             
             num_ejecucion ++;
+
+            // vector<long int> vec;
+            // cout << vec.max_size()<<endl;
+            // num_ejecucion ++;
         }
 
         fsalida.close();
