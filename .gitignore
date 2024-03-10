@@ -1,3 +1,6 @@
 P1/QuickSort/*.txt
 P1/QuickSort/*.o
 P1/QuickSort/quickSort
+P1/SlectionSort/*.txt
+P1/SlectionSort/*.o
+P1/SlectionSort/selectionSort
