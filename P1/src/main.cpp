@@ -49,45 +49,52 @@ int main(int argc, char **argv){
             cout << "Tiempo de ejecución(us) para vectores de  " << tam << " elementos." <<endl;
             fsalida<<tam<<" ";
 
-            t0= std::chrono::high_resolution_clock::now();
-            quickSort(vec);
-            tf= std::chrono::high_resolution_clock::now();
-
-            tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
-            cout << "   Quick Sort: " << tejecucion << endl;
-            fsalida<<tejecucion<<" ";
-
+            //Algoritmo Counting Sort
             t0= std::chrono::high_resolution_clock::now();
             countingSort(vec);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
-            cout << "   Counting Sort: " << tejecucion << endl;
+            cout << "\tCounting Sort: " << tejecucion << endl;
             fsalida<<tejecucion<<" ";
 
+            //Algoritmo Insertion Sort
             t0= std::chrono::high_resolution_clock::now();
             insertionSort(vec);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
-            cout << "   Insertion Sort: " << tejecucion << endl;
+            cout << "\tInsertion Sort: " << tejecucion << endl;
             fsalida<<tejecucion<<" ";
 
+            
+            //Algoritmo Quick Sort
+            t0= std::chrono::high_resolution_clock::now();
+            quickSort(vec);
+            tf= std::chrono::high_resolution_clock::now();
+
+            tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
+            cout << "\tQuick Sort: " << tejecucion << endl;
+            fsalida<<tejecucion<<" ";
+
+            //Algoritmo SelectionSort
+            t0= std::chrono::high_resolution_clock::now();
+            selectionSort(vec);
+            tf= std::chrono::high_resolution_clock::now();
+
+            tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
+            cout << "\tSelection Sort: " << tejecucion << endl;
+            fsalida<<tejecucion<<" ";
+
+            //Algoritmo Shell Sort
             t0= std::chrono::high_resolution_clock::now();
             shellSort(vec);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
-            cout << "   Shell Sort: " << tejecucion << endl;
+            cout << "\tShell Sort: " << tejecucion << endl;
             fsalida<<tejecucion<<" ";
 
-            // t0= std::chrono::high_resolution_clock::now();
-            // selectionSort(vec);
-            // tf= std::chrono::high_resolution_clock::now();
-
-            // tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
-            // cout << "   Selection Sort: " << tejecucion << endl;
-            // fsalida<<tejecucion<<" ";
 
             fsalida <<"\n";
 
