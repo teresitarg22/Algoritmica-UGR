@@ -18,7 +18,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 run:
-	@echo "Ejemplo de uso: $^ tiempos.txt 12345 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000"
+	@echo "Ejemplo de uso: ./bin/eficiencias tiempos.txt 12345 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000"
 
 
 clean:
