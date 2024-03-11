@@ -43,15 +43,26 @@ int main(int argc, char **argv){
             unsigned int tam = atoi(argv[num_ejecucion]);
            
             // Generamos vector aleatorio de prueba, con componentes entre 0 y n-1
-            for (int i= 0; i<tam; i++)
-                vec.push_back(rand()%tam);
+
+            
+            for (int i= 0; i<tam; i++){
+                int random= rand()%tam;
+                vec.push_back(random);
+            }
+
+
+            vector<int>v(vec);
+            vector<int>v2(vec);
+            vector<int>v3(vec);
+            vector<int>v4(vec);
+            vector<int>v5(vec);
 
             cout << "Tiempo de ejecución(us) para vectores de  " << tam << " elementos." <<endl;
             fsalida<<tam<<" ";
 
             //Algoritmo Counting Sort
             t0= std::chrono::high_resolution_clock::now();
-            countingSort(vec);
+            countingSort(v);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
@@ -60,7 +71,7 @@ int main(int argc, char **argv){
 
             //Algoritmo Insertion Sort
             t0= std::chrono::high_resolution_clock::now();
-            insertionSort(vec);
+            insertionSort(v2);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
@@ -70,7 +81,7 @@ int main(int argc, char **argv){
             
             //Algoritmo Quick Sort
             t0= std::chrono::high_resolution_clock::now();
-            quickSort(vec);
+            quickSort(v3);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
@@ -88,7 +99,7 @@ int main(int argc, char **argv){
 
             //Algoritmo Shell Sort
             t0= std::chrono::high_resolution_clock::now();
-            shellSort(vec);
+            shellSort(v5);
             tf= std::chrono::high_resolution_clock::now();
 
             tejecucion= std::chrono::duration_cast<std::chrono::microseconds>(tf - t0).count();
