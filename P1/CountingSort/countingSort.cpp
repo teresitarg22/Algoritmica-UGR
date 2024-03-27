@@ -58,7 +58,7 @@ int main(int argc, char **argv){
         return(1);
     }else{
         unsigned long int semilla;
-        int num_ejecucion = 3; //Los tres primeros elementos son el nombre del ejecutable, el nombre del fichero de salida y la semilla de rand
+        int num_ejecucion = 3; // Los tres primeros elementos son el nombre del ejecutable, el nombre del fichero de salida y la semilla de rand
         semilla = atoi(argv[2]);
         srand(semilla);
 
