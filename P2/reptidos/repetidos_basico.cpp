@@ -25,16 +25,16 @@ void repetidos(vector<int> &vec){
 }
 
 int main(int argc, char **argv){
-
-        vector<int> datos= {1,1,2,3,2,1,5};
+    /*prueba
+        vector<int> datos= {1,1,2,2,1,5,1,2,3,4,5,6,1,4,2,5,3,2,6,7,5,2,1};
         repetidos(datos);
 
         for (int i = 0 ; i < datos.size(); i++){
-            cout << datos[i];
+            cout << datos[i] << " ";
         }
-        cout << "" << endl;
- 
-    /*x
+        cout << endl;
+    */
+    
     if(argc < 4){
         printf("Faltan argumentos. Ejemplo: ./repetidos <fichero_salida> 12345 tam_ejecucion_1 tam_ejecucion_2 ...\n");
         return(1);
@@ -60,6 +60,7 @@ int main(int argc, char **argv){
         while (num_ejecucion  < argc){
 
             vector<int> datos;
+            datos.clear();
             unsigned long int tam = atoi(argv[num_ejecucion]);
 
             // --------------------------------------------------------------------
@@ -79,5 +80,5 @@ int main(int argc, char **argv){
         }
 
         fsalida.close();
-    }*/
+    }
 }
