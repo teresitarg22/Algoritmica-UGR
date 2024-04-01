@@ -27,6 +27,7 @@ void tuercasYTornillos_FB(const vector<int> tornillos, vector<int> & tuercas) {
                 aux = tuercas[i];
                 tuercas[i] = tuercas[j];
                 tuercas[j] = aux;
+                break;
             }
 }
 
@@ -151,7 +152,7 @@ int main(int argc, char **argv) {
 
 
             cout << "Tiempo FB: " << tejecucionFB << " DyV: " << tejecucionDyV << "(us) para vectores de  " << tam << " elementos." <<endl;
-            fsalida /*<< tam << " "*/ << tejecucionFB << "\t" << tejecucionDyV << "\n";
+            fsalida << tam << "\t" << tejecucionFB << "\t" << tejecucionDyV << "\n";
 
             num_ejecucion ++;
         }
