@@ -77,7 +77,7 @@ int crearParejas(const vector<vector<int>> & matrizAfinidad, vector<int> &pareja
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        cout << "Uso: " << argv[0] << " <nombre_archivo>" << endl;
+        cout << "Uso: " << argv[0] << " afinidades.txt" << endl;
         return 1;  // Salir del programa con un código de error
     }
 
