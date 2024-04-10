@@ -4,3 +4,16 @@ P1/QuickSort/quickSort
 P1/SlectionSort/*.txt
 P1/SlectionSort/*.o
 P1/SlectionSort/selectionSort
+
+P1/bin/eficiencias
+P1/obj/*.o
+P1/*.txt
+
+P2/organizacionCampeonato/*.txt
+P2/organizacionCampeonato/*.o
+P2/organizacionCampeonato/organizacionCampeonato_Basico
+P2/organizacionCampeonato/organizacionCampeonato_DyV
+
+
+P3/ejercicio1/*.o
+P3/ejercicio1/parejas
