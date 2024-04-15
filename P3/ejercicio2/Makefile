@@ -2,10 +2,10 @@ CXX = g++  # El compilador que utilizarás (en este caso, g++)
 CXXFLAGS = -std=c++11 -Wall -Wextra  # Opciones para el compilador
 
 # Nombre del ejecutable final
-TARGET = parejas
+TARGET = cenaGala
 
 # Archivos de código fuente y objeto
-SRCS = parejas.cpp
+SRCS = cenaGala.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Regla para compilar los archivos objeto
