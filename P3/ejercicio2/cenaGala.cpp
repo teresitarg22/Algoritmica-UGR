@@ -5,17 +5,18 @@
 using namespace std;
 
 // Función para leer la matriz desde un archivo
-void leerMatrizDesdeArchivo(const string& nombreArchivo, vector<vector<int>> & afinidades) {
+int leerMatrizDesdeArchivo(const string& nombreArchivo, vector<vector<int>> & afinidades) {
+    cout <<"hola";
     ifstream archivo(nombreArchivo);  // Abrir el archivo en modo lectura
 
     if (!archivo.is_open()) {
         cout << "No se pudo abrir el archivo " << nombreArchivo << endl;
-        return;
+        return 0;
     }
 
     int numeroFilas;
     archivo >> numeroFilas;  // Leer el número de filas desde el archivo
-
+    cout << numeroFilas;
      afinidades.resize(numeroFilas, vector<int>(numeroFilas, -1));  // Crear la matriz
 
     // Leer los valores de la matriz desde el archivo
@@ -25,8 +26,10 @@ void leerMatrizDesdeArchivo(const string& nombreArchivo, vector<vector<int>> & a
             archivo >> afinidades[i][j];
         }
     }
-    
+
     archivo.close();  // Cerrar el archivo
+    cout << numeroFilas;
+    return numeroFilas;
 
 }
 
@@ -87,19 +90,22 @@ int main(int argc, char* argv[]) {
         cout << "Uso: " << argv[0] << " afinidades.txt" << endl;
         return 1;  // Salir del programa con un código de error
     }
-
+    cout << "soy subnormal";
     string nombreArchivo = argv[1];
-
+    cout << "soy subnormal";
     vector<vector<int>> afinidades;
-    leerMatrizDesdeArchivo(nombreArchivo, afinidades);
+    int numeroFilas = leerMatrizDesdeArchivo(nombreArchivo, afinidades);
+
+    ifstream archivo(nombreArchivo); 
 
     vector<vector<int>> adyacentes;
+    cout << numeroFilas;
+    adyacentes.resize(numeroFilas, vector<int>(2, 0));
 
-    for (int i = 0; i < afinidades.size(); ++i) {
-
-        for (int j = 0; j < 2; ++j) {
-            adyacentes[i][j]= 0;
-        }
+    for( int i = 0; i < numeroFilas; i++){
+	    for( int j = 0; j < 2; j++){
+        	cout << adyacentes[i][j] << " ";
+	    }
     }
 
     int afinidadTotal = crearMesa(afinidades,adyacentes);
@@ -116,8 +122,8 @@ int main(int argc, char* argv[]) {
 
     //Mostrar las personas que se encuentran adyacentes a cada candidato
 
-    for(long unsigned int i = 0; i < adyacentes.size(); i++){
-	for(long unsigned int j = 0; i < 2; j++){
+    for( int i = 0; i < 4; i++){
+	for( int j = 0; j < 2; j++){
         	cout << adyacentes[i][j] << " ";
 	}
     }
@@ -125,4 +131,3 @@ int main(int argc, char* argv[]) {
     cout << endl << "Afinidad total: " << afinidadTotal <<endl;
 
     return 0;
-}
