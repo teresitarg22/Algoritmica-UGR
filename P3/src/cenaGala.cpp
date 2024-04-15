@@ -31,7 +31,7 @@ void leerMatrizDesdeArchivo(const string& nombreArchivo, vector<vector<int>> & a
 }
 
 
-int crearMesa(const vector<vector<int>> & matrizAfinidad, vector<int> &adyacentes){
+int crearMesa(const vector<vector<int>> & matrizAfinidad, vector<vector<int>> &adyacentes){
     set<int> candidatos;
 
     for(long unsigned int i = 0; i < adyacentes.size(); i++){
@@ -61,15 +61,15 @@ int crearMesa(const vector<vector<int>> & matrizAfinidad, vector<int> &adyacente
         }
 	
 	for (int m = 0; m < 2; m++){
-		if(P[i][x] == 0 && cambio1 == false){
-        		parejas[alumno] = candidato;
+		if(adyacentes[alumno][m] == 0 && cambio1 == false){
+        		adyacentes[alumno][m] = candidato;
 			cambio1 = true;
 		}
 
-		if(P[j][x] == 0 && cambio2 == false){
-        		parejas[candidato] = alumno;
+		if(adyacentes[candidato][m] == 0 && cambio2 == false){
+        		adyacentes[candidato][m] = alumno;
 			cambio2 = true;
-			if(x == 1)
+			if(m == 1)
 				candidatos.erase(candidato);
 		}
 	}
@@ -93,7 +93,14 @@ int main(int argc, char* argv[]) {
     vector<vector<int>> afinidades;
     leerMatrizDesdeArchivo(nombreArchivo, afinidades);
 
-    vector<int> adyacentes (afinidades.size(),-1);
+    vector<vector<int>> adyacentes;
+
+    for (int i = 0; i < afinidades.size(); ++i) {
+
+        for (int j = 0; j < 2; ++j) {
+            adyacentes[i][j]= 0;
+        }
+    }
 
     int afinidadTotal = crearMesa(afinidades,adyacentes);
 
