@@ -1,25 +1,21 @@
-CXX = g++
-CXXFLAGS = -std=c++11 -Wall
-LDFLAGS =
-SRC_DIR = ./src
-OBJ_DIR = ./obj
-BIN_DIR = ./bin
+# Variables
+SRCDIR := src
+BINDIR := bin
+CPP_FILES := $(wildcard $(SRCDIR)/*.cpp)
+EXECUTABLES := $(CPP_FILES:$(SRCDIR)/%.cpp=$(BINDIR)/%)
 
-TARGET = $(BIN_DIR)/eficiencias
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
-OBJECTS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
+# Compiler
+CXX := g++
+CXXFLAGS := -std=c++11 -Wall
 
-all: $(TARGET)
+# Targets
+all: $(EXECUTABLES)
 
-$(TARGET): $(OBJECTS)
-	$(CXX) $(LDFLAGS) -o $@ $^
+$(BINDIR)/%: $(SRCDIR)/%.cpp | $(BINDIR)
+	$(CXX) $(CXXFLAGS) -o $@ $<
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
-run:
-	@echo "Ejemplo de uso: ./bin/tuercas tiempos.txt 12345 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000"
-
+$(BINDIR):
+	mkdir -p $(BINDIR)
 
 clean:
-	rm -f $(TARGET) $(OBJECTS)
+	rm -rf $(BINDIR)
