@@ -10,7 +10,7 @@ struct Nodo {
     const Nodo *padre = nullptr;
 };
 
-vector<Nodo> generarHijos(const Nodo& nodo, const unordered_map<pair<int,int>,bool>& casillas_visitadas, const vector<vector<bool>>& laberinto) {
+vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas_visitadas, const vector<vector<bool>>& laberinto) {
     vector<Nodo> hijos;
     int x = nodo.pos.first;
     int y = nodo.pos.second;
@@ -20,28 +20,28 @@ vector<Nodo> generarHijos(const Nodo& nodo, const unordered_map<pair<int,int>,bo
     // Tenemos en cuenta los límites del laberinto para que no genere hijos fuera de él
 
     // Movimiento hacia arriba
-    if ( x > 0 && laberinto[x-1][y] && !casillas_visitadas.at(make_pair(x-1, y)) ) {
+    if ( x > 0 && laberinto[x-1][y] && !casillas_visitadas[x-1][y] ) {
         hijo.pos = make_pair(x-1, y);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
     }
 
     // Movimiento hacia abajo
-    if ( x < laberinto.size()-1 && laberinto[x+1][y] && !casillas_visitadas.at(make_pair(x+1, y)) ) {
+    if ( x < laberinto.size()-1 && laberinto[x+1][y] && !casillas_visitadas[x+1][y] ) {
         hijo.pos = make_pair(x+1, y);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
     }
 
     // Movimiento hacia la izquierda
-    if ( y > 0 && laberinto[x][y-1] && !casillas_visitadas.at(make_pair(x, y-1)) ) {
+    if ( y > 0 && laberinto[x][y-1] && !casillas_visitadas[x][y-1] ) {
         hijo.pos = make_pair(x, y-1);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
     }
 
     // Movimiento hacia la derecha
-    if ( y < laberinto[0].size()-1 && laberinto[x][y+1] && !casillas_visitadas.at(make_pair(x, y+1)) ) {
+    if ( y < laberinto[0].size()-1 && laberinto[x][y+1] && !casillas_visitadas[x][y+1] ) {
         hijo.pos = make_pair(x, y+1);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
@@ -52,11 +52,11 @@ vector<Nodo> generarHijos(const Nodo& nodo, const unordered_map<pair<int,int>,bo
 
 
 // Dado que tamaño mínimo debe ser 3x3 y la salida es  n-1,n-1, la casilla 0,0 nunca podrá ser de salida
-vector<pair<int,int>> backtracking(const vector<vector<bool>>& laberinto,  unordered_map<pair<int,int>,bool>& casillas_visitadas, Nodo actual = Nodo()) {
+vector<pair<int,int>> backtracking(const vector<vector<bool>>& laberinto, vector<vector<bool>>& casillas_visitadas, Nodo actual = Nodo()) {
 
     cout << "Actual: " << actual.pos.first << " " << actual.pos.second << endl;
 
-    casillas_visitadas[actual.pos] = true;
+    casillas_visitadas[actual.pos.first][actual.pos.second] = true;
 
     vector<Nodo> hijos = generarHijos(actual, casillas_visitadas, laberinto);
                                                                                                                                                                                                                                                                              
@@ -102,15 +102,14 @@ int main(int argc, char* argv[]) {
     file >> tam;
 
     vector<vector<bool>> laberinto(tam, vector<bool>(tam));
-    unordered_map<pair<int,int>,bool> casillas_visitadas = {{}};
+    vector<vector<bool>> casillas_visitadas(tam, vector<bool>(tam));
 
     for (int i = 0; i < tam; ++i)
         for (int j = 0; j < tam; ++j) {
             int value;
             file >> value;
             laberinto[i][j] = value;
-            if (value)
-                casillas_visitadas[make_pair(i,j)] = false;
+            casillas_visitadas[i][j] = false;
         }
 
     file.close();
@@ -137,7 +136,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-    vector<pair<int,int>> resultado_backtracking = backtracking(laberinto, casillas_visitadas);
+    vector<pair<int,int>> resultado_backtracking = backtracking(laberinto,casillas_visitadas);
 
     // vector<pair<int,int>> resultado_poda = poda(laberinto);
 
