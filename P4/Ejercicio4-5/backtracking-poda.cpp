@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -54,21 +55,21 @@ vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas
 // Dado que tamaño mínimo debe ser 3x3 y la salida es  n-1,n-1, la casilla 0,0 nunca podrá ser de salida
 vector<pair<int,int>> backtracking(const vector<vector<bool>>& laberinto, vector<vector<bool>>& casillas_visitadas, Nodo actual = Nodo()) {
 
-    cout << "Actual: " << actual.pos.first << " " << actual.pos.second << endl;
-
     casillas_visitadas[actual.pos.first][actual.pos.second] = true;
 
     vector<Nodo> hijos = generarHijos(actual, casillas_visitadas, laberinto);
-                                                                                                                                                                                                                                                                             
-    for (const auto& n : hijos){
+                                                                                                                                                                                                                                                                  
+    for (const auto& n : hijos)
         if (n.pos == make_pair(int(laberinto.size()-1), int(laberinto[0].size()-1))){
             vector<pair<int,int>> resultado;
             Nodo aux = n;
 
             while (aux.padre != nullptr){
-                resultado.push_back(actual.pos);
-                aux = *(n.padre);
+                resultado.push_back(aux.pos);
+                aux = *(aux.padre);
             }
+
+            resultado.push_back(aux.pos);
 
             return resultado;
         }
@@ -77,7 +78,8 @@ vector<pair<int,int>> backtracking(const vector<vector<bool>>& laberinto, vector
             if (!resultado.empty())
                 return resultado;
         } 
-    }
+
+    return vector<pair<int,int>>();
 }
 
 vector<pair<int,int>> poda(const vector<vector<bool>>& laberinto) {
@@ -137,9 +139,11 @@ int main(int argc, char* argv[]) {
 
 
     vector<pair<int,int>> resultado_backtracking = backtracking(laberinto,casillas_visitadas);
+    reverse(resultado_backtracking.begin(), resultado_backtracking.end());
 
     // vector<pair<int,int>> resultado_poda = poda(laberinto);
 
+    
 
     cout << endl << "Resultado Backtracking:" << endl;
 
@@ -148,7 +152,7 @@ int main(int argc, char* argv[]) {
 
     else
         for (const auto& p : resultado_backtracking)
-            cout << "(" << p.first << ", " << p.second << ")" << endl;
+            cout << "(" << p.first << ", " << p.second << ")" << " ";
 
 
     // cout << endl << "Resultado Poda:" << endl;
