@@ -114,7 +114,7 @@ vector<pair<int,int>> poda(const vector<vector<bool>>& laberinto, vector<vector<
                 camino_mas_corto.push_back(actual->pos);
                 actual = actual->padre;
             }
-            reverse(camino_mas_corto.begin(), camino_mas_corto.end());
+
             longitud_minima = longitud;
             break;
         }
@@ -212,7 +212,7 @@ int main(int argc, char* argv[]) {
             cout << "(" << p.first << ", " << p.second << ")" << " ";
 
     vector<pair<int,int>> resultado_poda = poda(laberinto, casillas_visitadas_poda);
-   // reverse(resultado_poda.begin(), resultado_poda.end());
+    reverse(resultado_poda.begin(), resultado_poda.end());
 
     cout << endl << "Resultado Poda:" << endl;
 
