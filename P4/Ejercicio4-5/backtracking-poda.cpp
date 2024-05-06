@@ -3,21 +3,28 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <queue>
+#include <climits>
 
 using namespace std;
 
 struct Nodo {
-    pair<int,int> pos = make_pair(0,0);
-    const Nodo *padre = nullptr;
+    pair<int,int> pos;
+    int longitud; // Longitud del camino desde el inicio hasta este nodo, para B&B
+    const Nodo *padre;
+
+    Nodo(pair<int, int> pos, int len, const Nodo* par) : pos(pos), longitud(len), padre(par) {}
+    Nodo() : pos(make_pair(0,0)), longitud(0), padre(nullptr) {}
 };
 
 vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas_visitadas, const vector<vector<bool>>& laberinto) {
     vector<Nodo> hijos;
     int x = nodo.pos.first;
     int y = nodo.pos.second;
+            
 
     Nodo hijo;
-
+   
     // Tenemos en cuenta los límites del laberinto para que no genere hijos fuera de él
 
     // Movimiento hacia arriba
@@ -25,6 +32,7 @@ vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas
         hijo.pos = make_pair(x-1, y);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
+       
     }
 
     // Movimiento hacia abajo
@@ -32,6 +40,7 @@ vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas
         hijo.pos = make_pair(x+1, y);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
+        
     }
 
     // Movimiento hacia la izquierda
@@ -39,6 +48,7 @@ vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas
         hijo.pos = make_pair(x, y-1);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
+       
     }
 
     // Movimiento hacia la derecha
@@ -46,8 +56,9 @@ vector<Nodo> generarHijos(const Nodo& nodo, const vector<vector<bool>>& casillas
         hijo.pos = make_pair(x, y+1);
         hijo.padre = &nodo;
         hijos.push_back(hijo);
+        
     }
-
+ 
     return hijos;
 }
 
@@ -82,9 +93,56 @@ vector<pair<int,int>> backtracking(const vector<vector<bool>>& laberinto, vector
     return vector<pair<int,int>>();
 }
 
-vector<pair<int,int>> poda(const vector<vector<bool>>& laberinto) {
+vector<pair<int,int>> poda(const vector<vector<bool>>& laberinto, vector<vector<bool>>& casillas_visitadas, Nodo inicial = Nodo()) {
+   int n = laberinto.size();
+    priority_queue<pair<int, Nodo*>> cola_prioridad;
 
+    cola_prioridad.push({0, new Nodo({0, 0}, 0, nullptr)});
+    vector<pair<int, int>> camino_mas_corto;
+
+    int longitud_minima = INT_MAX;
+
+    while (!cola_prioridad.empty()) {
+        const Nodo* actual = cola_prioridad.top().second;
+        int longitud = -cola_prioridad.top().first;
+        cola_prioridad.pop();
+
+        if (actual->pos == make_pair(n - 1, n - 1)) {
+            // Encontramos la salida
+            camino_mas_corto.clear();
+            while (actual != nullptr) {
+                camino_mas_corto.push_back(actual->pos);
+                actual = actual->padre;
+            }
+            reverse(camino_mas_corto.begin(), camino_mas_corto.end());
+            longitud_minima = longitud;
+            break;
+        }
+
+        if (longitud >= longitud_minima) {
+            // Podar si la longitud actual es mayor o igual a la longitud mínima encontrada hasta el momento
+            continue;
+        }
+
+        casillas_visitadas[actual->pos.first][actual->pos.second] = true;
+
+        vector<Nodo> hijos = generarHijos(*actual, casillas_visitadas, laberinto);
+        for (auto& hijo : hijos) {
+            int longitud_hijo = longitud + 1;
+            cola_prioridad.push({-longitud_hijo, new Nodo(hijo.pos, longitud_hijo, actual)});
+        }
+    }
+
+    // Liberar la memoria de los nodos creados
+    while (!cola_prioridad.empty()) {
+        delete cola_prioridad.top().second;
+        cola_prioridad.pop();
+    }
+
+    return camino_mas_corto;
 }
+
+
 
 int main(int argc, char* argv[]) {
 
@@ -105,6 +163,7 @@ int main(int argc, char* argv[]) {
 
     vector<vector<bool>> laberinto(tam, vector<bool>(tam));
     vector<vector<bool>> casillas_visitadas(tam, vector<bool>(tam));
+    vector<vector<bool>> casillas_visitadas_poda(tam, vector<bool>(tam));
 
     for (int i = 0; i < tam; ++i)
         for (int j = 0; j < tam; ++j) {
@@ -112,6 +171,7 @@ int main(int argc, char* argv[]) {
             file >> value;
             laberinto[i][j] = value;
             casillas_visitadas[i][j] = false;
+            casillas_visitadas_poda[i][j] = false;
         }
 
     file.close();
@@ -137,12 +197,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-
+    
     vector<pair<int,int>> resultado_backtracking = backtracking(laberinto,casillas_visitadas);
     reverse(resultado_backtracking.begin(), resultado_backtracking.end());
-
-    // vector<pair<int,int>> resultado_poda = poda(laberinto);
-
     
 
     cout << endl << "Resultado Backtracking:" << endl;
@@ -154,15 +211,17 @@ int main(int argc, char* argv[]) {
         for (const auto& p : resultado_backtracking)
             cout << "(" << p.first << ", " << p.second << ")" << " ";
 
+    vector<pair<int,int>> resultado_poda = poda(laberinto, casillas_visitadas_poda);
+   // reverse(resultado_poda.begin(), resultado_poda.end());
 
-    // cout << endl << "Resultado Poda:" << endl;
+    cout << endl << "Resultado Poda:" << endl;
 
-    // if (resultado_poda.empty())
-    //     cout << "No existe una solución en Poda para ir desde la casilla {0,0} a la {" << laberinto.size()-1 << "," << laberinto[0].size()-1 << "}." << endl;
+    if (resultado_poda.empty())
+        cout << "No existe una solución en Poda para ir desde la casilla {0,0} a la {" << laberinto.size()-1 << "," << laberinto[0].size()-1 << "}." << endl;
 
-    // else
-    //     for (const auto& p : resultado_poda)
-    //         cout << "(" << p.first << ", " << p.second << ")" << endl;
+    else
+        for (const auto& p : resultado_poda)
+            cout << "(" << p.first << ", " << p.second << ")" << " ";
 
 
     return 0;
