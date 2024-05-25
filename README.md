@@ -62,3 +62,30 @@ Los problemas que se van a abordar en esta práctica son los siguientes:
 - **Problema 5** – El problema plantea la solución de asfaltar el número de calles necesarias que permitan acceder a todas las plazas de un pueblo. Buscamos dar como resultado un conjunto de calles tal que, si las asfaltamos, se puede ir de una plaza a otra con el coste total mínimo.
 
 
+## :file_folder: Práctica 4 : Algoritmos de exploración de grafos.
+
+El objetivo de la práctica consiste en que seamos capaces de analizar una serie de problemas y resolverlos mediante las técnicas de diseño de algoritmos basadas en exploración de grafos. Los problemas que se van a abordar en esta práctica son los siguientes:
+
+- **Problema 1** – emparejar n estudiantes en parejas, maximizando la suma de los valores de emparejamiento. Cada estudiante tiene un nivel de preferencia para trabajar con otros estudiantes, representado en una matriz p de tamaño n×n. Se busca encontrar el emparejamiento óptimo.
+
+- **Problema 2** – organizar la distribución de n invitados alrededor de una mesa circular, donde cada invitado tiene asignados dos asientos contiguos. Cada par de invitados tiene un nivel de conveniencia asociado, que indica cuán deseable es que se sienten juntos. El objetivo es maximizar el nivel total de conveniencia de la distribución de invitados en la mesa.
+
+- **Problema 3**– algoritmo de backtracking que encuentre una serie de movimientos para alcanzar con éxito el final del juego Senku, consistente en dejar solo una pieza en el tablero, ubicada en la posición central. 
+
+- **Problema 4 y 5** – encontrar un camino desde la entrada hasta la salida de un laberinto representado por una matriz bidimensional. Para el problema 4 se pide usar backtracking, mientras que para el problema 5 aplicar B&B.
+
+
+## :file_folder: Práctica 5 : Algoritmos de exploración de grafos.
+
+El objetivo de la práctica consiste en que seamos capaces de analizar un problema y resolverlo mediante la técnica de Programación Dinámica, siendo capaz de justificar su eficacia en términos de optimalidad. Los problemas que se van a abordar en esta práctica son los siguientes:
+
+- **Problema 1** – A lo largo de un río hay n aldeas, donde en cada una se puede alquilar una canoa para viajar a otras aldeas. Determinar el coste mínimo de viajar en canoa a favor de la corriente desde cualquier aldea 𝑖 hasta cualquier aldea 𝑗 (donde 𝑖 < 𝑗) a lo largo de un río.
+
+- **Problema 2** – Se realizan planificaciones de viajes aéreos entre n ciudades, donde para llegar de una ciudad a otra puede ser necesario coger varios vuelos. Conocer la forma de volar desde cualquier ciudad i hasta cualquier otra j en el menor tiempo posible.
+
+- **Problema 3** – Un videojuego que se juega por turnos y está basado en avanzar por un mapa, por las casillas transitables, hasta llegar a la salida pudiendo recoger tanto oro como sea posible. El jugador tiene una serie de movimientos permitidos que podrá realizar para encontrar la salida. Cada casilla del mapa puede estar vacía, contener un muro, o contener una bolsa de oro. Todas las casillas son transitables salvo las que tienen muros.
+
+- **Problema 4** – Trata de avanzar por una montaña, ascendiendo desde una posición baja hasta la cumbre, buscando el recorrido con menor dificultad. En la ascensión siempre se sube (sin desfallecer) pero moviéndose directamente hacia arriba, o desplazándose a la izquierda o derecha en diagonal. En cada posible posición de la montaña hay un coste asociado de la dificultad que tiene llegar a esa posición.
+
+
+
