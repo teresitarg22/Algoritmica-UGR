@@ -5,31 +5,31 @@
 
 using namespace std;
 
-pair<int, vector<int>> minDifficultyPath(const vector<vector<int>>& t) {
-    int n = t.size();    // número de filas
-    int m = t[0].size(); // número de columnas
+pair<int, vector<int>> minDifficultyPath(const vector<vector<int>>& montana) {
+    int n = montana.size();    // número de filas
+    int m = montana[0].size(); // número de columnas
 
-    // Inicializar la matriz d con los mismos valores que t para la primera fila
+    // Inicializar la matriz d con los mismos valores que montana para la primera fila
     vector<vector<int>> d(n, vector<int>(m, INT_MAX));
     vector<vector<int>> path(n, vector<int>(m, -1)); // Para rastrear el camino
 
     for (int j = 0; j < m; ++j) {
-        d[0][j] = t[0][j];
+        d[0][j] = montana[0][j];
     }
 
     // Llenar la matriz d y mantener rastreo del camino
     for (int i = 1; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
-            if (j > 0 && d[i][j] > t[i][j] + d[i-1][j-1]) {
-                d[i][j] = t[i][j] + d[i-1][j-1];
+            if (j > 0 && d[i][j] > montana[i][j] + d[i-1][j-1]) {
+                d[i][j] = montana[i][j] + d[i-1][j-1];
                 path[i][j] = j-1;
             }
-            if (d[i][j] > t[i][j] + d[i-1][j]) {
-                d[i][j] = t[i][j] + d[i-1][j];
+            if (d[i][j] > montana[i][j] + d[i-1][j]) {
+                d[i][j] = montana[i][j] + d[i-1][j];
                 path[i][j] = j;
             }
-            if (j < m-1 && d[i][j] > t[i][j] + d[i-1][j+1]) {
-                d[i][j] = t[i][j] + d[i-1][j+1];
+            if (j < m-1 && d[i][j] > montana[i][j] + d[i-1][j+1]) {
+                d[i][j] = montana[i][j] + d[i-1][j+1];
                 path[i][j] = j+1;
             }
         }
@@ -57,14 +57,14 @@ pair<int, vector<int>> minDifficultyPath(const vector<vector<int>>& t) {
 }
 
 int main() {
-    vector<vector<int>> t = {
+    vector<vector<int>> montana = {
         {1, 3, 2, 4},
         {4, 8, 1, 6},
         {3, 2, 1, 7},
         {6, 2, 3, 4}
     };
 
-    auto result = minDifficultyPath(t);
+    auto result = minDifficultyPath(montana);
     int minCost = result.first;
     vector<int> path = result.second;
     reverse(path.begin(), path.end()); // Invertir el camino (de base a cima
