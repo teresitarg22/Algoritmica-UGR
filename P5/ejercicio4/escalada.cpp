@@ -5,47 +5,76 @@
 
 using namespace std;
 
-int minDifficultyPath(const vector<vector<int>>& cost) {
-    int n = cost.size();    // número de filas
-    int m = cost[0].size(); // número de columnas
+pair<int, vector<int>> minDifficultyPath(const vector<vector<int>>& t) {
+    int n = t.size();    // número de filas
+    int m = t[0].size(); // número de columnas
 
-    // Inicializar la matriz dp con los mismos valores que cost para la primera fila
-    vector<vector<int>> dp(n, vector<int>(m, INT_MAX));
+    // Inicializar la matriz d con los mismos valores que t para la primera fila
+    vector<vector<int>> d(n, vector<int>(m, INT_MAX));
+    vector<vector<int>> path(n, vector<int>(m, -1)); // Para rastrear el camino
+
     for (int j = 0; j < m; ++j) {
-        dp[0][j] = cost[0][j];
+        d[0][j] = t[0][j];
     }
 
-    // Llenar la matriz dp
+    // Llenar la matriz d y mantener rastreo del camino
     for (int i = 1; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
-            if (j == 0) {
-                dp[i][j] = cost[i][j] + min(dp[i-1][j], dp[i-1][j+1]);
-            } else if (j == m-1) {
-                dp[i][j] = cost[i][j] + min(dp[i-1][j-1], dp[i-1][j]);
-            } else {
-                dp[i][j] = cost[i][j] + min({dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1]});
+            if (j > 0 && d[i][j] > t[i][j] + d[i-1][j-1]) {
+                d[i][j] = t[i][j] + d[i-1][j-1];
+                path[i][j] = j-1;
+            }
+            if (d[i][j] > t[i][j] + d[i-1][j]) {
+                d[i][j] = t[i][j] + d[i-1][j];
+                path[i][j] = j;
+            }
+            if (j < m-1 && d[i][j] > t[i][j] + d[i-1][j+1]) {
+                d[i][j] = t[i][j] + d[i-1][j+1];
+                path[i][j] = j+1;
             }
         }
     }
 
-    // Encontrar el coste mínimo en la última fila
+    // Encontrar el coste mínimo en la última fila y su posición
     int minCost = INT_MAX;
+    int minIndex = -1;
     for (int j = 0; j < m; ++j) {
-        minCost = min(minCost, dp[n-1][j]);
+        if (d[n-1][j] < minCost) {
+            minCost = d[n-1][j];
+            minIndex = j;
+        }
     }
 
-    return minCost;
+    // Reconstruir el camino desde la cima a la base
+    vector<int> bestPath(n);
+    int currentIndex = minIndex;
+    for (int i = n-1; i >= 0; --i) {
+        bestPath[i] = currentIndex;
+        currentIndex = path[i][currentIndex];
+    }
+
+    return {minCost, bestPath};
 }
 
 int main() {
-    vector<vector<int>> cost = {
-        {2, 8, 9, 5, 8},
-        {4, 4, 6, 2, 3},
-        {5, 7, 5, 6, 1},
-        {3, 2, 5, 4, 8}
+    vector<vector<int>> t = {
+        {1, 3, 2, 4},
+        {4, 8, 1, 6},
+        {3, 2, 1, 7},
+        {6, 2, 3, 4}
     };
 
-    cout << "El costo mínimo para subir la montaña es: " << minDifficultyPath(cost) << endl;
+    auto result = minDifficultyPath(t);
+    int minCost = result.first;
+    vector<int> path = result.second;
+    reverse(path.begin(), path.end()); // Invertir el camino (de base a cima
+
+    cout << "El costo mínimo para subir la montaña es: " << minCost << endl;
+    cout << "El camino tomado es: ";
+    for (int pos : path) {
+        cout << pos << " ";
+    }
+    cout << endl;
 
     return 0;
 }
