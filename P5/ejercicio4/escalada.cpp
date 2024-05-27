@@ -5,7 +5,7 @@
 
 using namespace std;
 
-pair<int, vector<int>> minDifficultyPath(const vector<vector<int>>& montana) {
+pair<int, vector<int>> escalada(const vector<vector<int>>& montana) {
     int n = montana.size();    // número de filas
     int m = montana[0].size(); // número de columnas
 
@@ -64,7 +64,7 @@ int main() {
         {6, 2, 3, 4}
     };
 
-    auto result = minDifficultyPath(montana);
+    auto result = escalada(montana);
     int minCost = result.first;
     vector<int> path = result.second;
     reverse(path.begin(), path.end()); // Invertir el camino (de base a cima
